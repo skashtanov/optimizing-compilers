@@ -63,12 +63,15 @@
  *
  * 9. So, its an in-place prefix sums evaluation.
  *    It could be simplified via using a for loop instead of do-while one.
+ *    But clang would unroll the loop, to get the same result we need to disable it
+ *    via #pragma clang loop unroll(disable)
  */
 int prefix_sums(int* arr, int n) {
     if (n <= 0) {
         return 0;
     }
     int sum = 0;
+    #pragma clang loop unroll(disable)
     for (int i = 0; i < n; ++i) {
         sum += arr[i];
         arr[i] = sum;
